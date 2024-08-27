@@ -1,0 +1,30 @@
+﻿@inject IJSRuntime JSRuntime
+@inject ILocalStorageService _localStorage;
+
+<RadzenToggleButton Icon=@(lightMode ? "light_mode" : "dark_mode") ButtonStyle=@(lightMode ? ButtonStyle.Light : ButtonStyle.Dark) Click="@ToggleLightMode" />
+
+@code {
+    bool lightMode = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            string? theme = await _localStorage.GetItemAsStringAsync("theme");
+            if (theme != null)
+            {
+                lightMode = theme == "dark" ? false : true;
+                StateHasChanged();
+            }
+        }
+    }
+
+    private async Task ToggleLightMode()
+    {
+        lightMode = !lightMode;
+        var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/site.js");
+        await module.InvokeVoidAsync("setTheme", lightMode ? "default" : "dark");
+        //persisting the settings in DB
+        //await _settingsViewModel.UpdateTheme();
+    }
+}

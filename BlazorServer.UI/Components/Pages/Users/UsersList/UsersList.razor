@@ -1,0 +1,20 @@
+﻿@page "/users"
+@using Common.Constants
+@attribute [Authorize (Roles = Role.Administrator)]
+
+<h3>Users List</h3>
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data="@loginList" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" SelectionMode="DataGridSelectionMode.Single">
+    <Columns>
+        <RadzenDataGridColumn Property="EmployeeID" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn Title="Photo" Frozen="true" Sortable="false" Filterable="false" Width="80px" TextAlign="TextAlign.Center">          
+       
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Property="FirstName" Title="First Name" Frozen="true" Width="160px" />
+        <RadzenDataGridColumn Property="LastName" Title="Last Name" Width="160px" />
+        <RadzenDataGridColumn Property="Address" Title="Address" Width="200px" />
+        <RadzenDataGridColumn Property="City" Title="City" Width="160px" />        
+        <RadzenDataGridColumn Property="Notes" Title="Notes" Width="300px" />
+    </Columns>
+</RadzenDataGrid>

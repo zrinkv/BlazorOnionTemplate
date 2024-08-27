@@ -1,0 +1,244 @@
+﻿@page "/"
+@attribute [Authorize]
+@using BlazorServer.UI.SharedServices
+@inject IHttpContextAccessor httpContextAccessor
+@inject NavigationManager navigationManager
+@inject IBaseHttpClient _baseHttpClient;
+@inject IStringLocalizer<Resources> localizer
+
+<PageTitle>@localizer["home"]</PageTitle>
+
+<h1>@localizer["helloWorld"]</h1>
+
+Welcome to your new app.
+
+<AuthorizeView>
+    <NotAuthorized>
+        Home
+        <span>You are not logged in</span>
+        <a href="/login">Login</a>
+    </NotAuthorized>
+    <Authorized>
+        Home
+        <span>Logged in as <b>@context.User.Identity.Name</b></span>
+        <a href="/logout">Logout</a>
+    </Authorized>
+    <Authorized>
+        <RadzenButton Text="Get data" Click="GetData"></RadzenButton>
+        <br />
+        @contentStringData
+        <hr />
+        <div >
+            <div >
+                <div >
+                    <RadzenCard class="w-100 mb-4" Style="display: flex; align-items: center; gap: 0.5rem">
+                        <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+                        <RadzenLabel Text="@localizer["smooth"]" Component="smooth" Style="margin-right: 1rem;" />
+                        <RadzenCheckBox @bind-Value="@showDataLabels" Name="dataLabels"></RadzenCheckBox>
+                        <RadzenLabel Text="@localizer["dataLabels"]" Component="dataLabels" Style="margin-right: 1rem;" />
+                        <RadzenCheckBox @bind-Value="@showMarkers" Name="markers"></RadzenCheckBox>
+                        <RadzenLabel Text="@localizer["showMarkers"]" Component="markers" />
+                    </RadzenCard>
+                    <RadzenChart>
+                        <RadzenLineSeries Smooth="@smooth" Data="@revenue2023" CategoryProperty="Date" Title="2023" LineType="LineType.Dashed" ValueProperty="Revenue">
+                            <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
+                            <RadzenSeriesDataLabels Visible="@showDataLabels" />
+                        </RadzenLineSeries>
+                        <RadzenLineSeries Smooth="@smooth" Data="@revenue2024" CategoryProperty="Date" Title="2024" ValueProperty="Revenue">
+                            <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Circle" />
+                            <RadzenSeriesDataLabels Visible="@showDataLabels" />
+                        </RadzenLineSeries>
+                        <RadzenCategoryAxis Padding="20" />
+                        <RadzenValueAxis Formatter="@FormatAsUSD">
+                            <RadzenGridLines Visible="true" />
+                            <RadzenAxisTitle Text="@localizer["revenueInEuro"]" />
+                        </RadzenValueAxis>
+                    </RadzenChart>
+                </div>
+            </div>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+<p>UserAgent = @UserAgent</p>
+<p>IPAddress = @IPAddress</p>
+
+<p>LocalTimeZone = @LocalTimeZone</p>
+<p>DateTimeNow = @DateTimeNow</p>
+
+
+<hr />
+
+@code {
+    public string? UserAgent { get; set; }
+    public string? IPAddress { get; set; }
+
+    public string? contentStringData;
+
+    public string? LocalTimeZone;
+    public string? DateTimeNow;
+
+    protected override async Task OnInitializedAsync()
+    {
+        LocalTimeZone = TimeZoneInfo.Local.ToString();
+        DateTimeNow = DateTime.Now.ToString();
+
+        if (httpContextAccessor != null)
+        {
+            if (httpContextAccessor.HttpContext.User.Claims.Count() > 0)
+                UserAgent = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "jwtToken").ToString();          
+
+            IPAddress = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+
+            await base.OnInitializedAsync();
+        }        
+    }
+
+    public async Task GetData()
+    {
+        contentStringData = await _baseHttpClient.GetApiResponseAsync("Login/GetData");
+        StateHasChanged();
+    }
+
+    //line chart
+    bool smooth = true;
+    bool showDataLabels = true;
+    bool showMarkers = true;
+
+    class DataItem
+    {
+        public string? Date { get; set; }
+        public double Revenue { get; set; }
+    }
+
+    string FormatAsUSD(object value)
+    {
+        return ((double)value).ToString();
+    }
+
+    DataItem[] revenue2023 = new DataItem[] {
+        new DataItem
+        {
+            Date = "Jan",
+            Revenue = 234000
+        },
+        new DataItem
+        {
+            Date = "Feb",
+            Revenue = 269000
+        },
+        new DataItem
+        {
+            Date = "Mar",
+            Revenue = 233000
+        },
+        new DataItem
+        {
+            Date = "Apr",
+            Revenue = 244000
+        },
+        new DataItem
+        {
+            Date = "May",
+            Revenue = 214000
+        },
+        new DataItem
+        {
+            Date = "Jun",
+            Revenue = 253000
+        },
+        new DataItem
+        {
+            Date = "Jul",
+            Revenue = 274000
+        },
+        new DataItem
+        {
+            Date = "Aug",
+            Revenue = 284000
+        },
+        new DataItem
+        {
+            Date = "Sept",
+            Revenue = 273000
+        },
+        new DataItem
+        {
+            Date = "Oct",
+            Revenue = 282000
+        },
+        new DataItem
+        {
+            Date = "Nov",
+            Revenue = 289000
+        },
+        new DataItem
+        {
+            Date = "Dec",
+            Revenue = 294000
+        }
+    };
+
+    DataItem[] revenue2024 = new DataItem[] {
+        new DataItem
+        {
+            Date = "Jan",
+            Revenue = 334000
+        },
+        new DataItem
+        {
+            Date = "Feb",
+            Revenue = 369000
+        },
+        new DataItem
+        {
+            Date = "Mar",
+            Revenue = 333000
+        },
+        new DataItem
+        {
+            Date = "Apr",
+            Revenue = 344000
+        },
+        new DataItem
+        {
+            Date = "May",
+            Revenue = 314000
+        },
+        new DataItem
+        {
+            Date = "Jun",
+            Revenue = 353000
+        },
+        new DataItem
+        {
+            Date = "Jul",
+            Revenue = 374000
+        },
+        new DataItem
+        {
+            Date = "Aug",
+            Revenue = 384000
+        },
+        new DataItem
+        {
+            Date = "Sept",
+            Revenue = 373000
+        },
+        new DataItem
+        {
+            Date = "Oct",
+            Revenue = 382000
+        },
+        new DataItem
+        {
+            Date = "Nov",
+            Revenue = 389000
+        },
+        new DataItem
+        {
+            Date = "Dec",
+            Revenue = 394000
+        }
+    };
+}

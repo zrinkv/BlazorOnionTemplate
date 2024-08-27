@@ -1,0 +1,81 @@
+﻿@using Common.Constants
+@using BlazorServer.UI.Components.Helpers
+@inject IStringLocalizer<Resources> localizer
+@inject IHttpContextAccessor httpContextAccessor
+@inject NavigationManager NavigationManager
+
+<div class="rz-header"> @* RadzenHeader *@
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween">
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+            <RadzenIcon Icon="water_drop" />
+            <RadzenLabel Text="MK Vodovod" />
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+            <CultureSelector></CultureSelector>
+            <ThemeSwitcher></ThemeSwitcher>
+            <RadzenProfileMenu>
+                <Template>
+                    <RadzenLabel Text="@LoggedUser"></RadzenLabel>
+                    <RadzenImage Path="account_circle.svg" style="border-radius: 16px; height: 32px; width: 32px"></RadzenImage>
+                    @* <RadzenGravatar Email="@UserEmail" /> *@
+                </Template>                
+                <ChildContent>
+                    <AuthorizeView>
+                        <Authorized>
+                            <RadzenProfileMenuItem Path="profile" Icon="settings" Text="Profile"></RadzenProfileMenuItem>
+                            <RadzenProfileMenuItem Path="application-users" Icon="person" Text="Users"></RadzenProfileMenuItem>
+                            <RadzenProfileMenuItem Path="application-roles" Icon="security" Text="Roles"></RadzenProfileMenuItem>
+                            <RadzenButton ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Icon="logout" Text="Odjava" Click="Logout" Style="width: 100%;"></RadzenButton>
+                        </Authorized>
+                    </AuthorizeView>
+                </ChildContent>                
+            </RadzenProfileMenu>
+        </RadzenStack>
+    </RadzenStack>
+</div>
+<AuthorizeView>
+    <Authorized>
+        <RadzenSidebar @bind-Expanded="@sidebarExpanded">
+            <RadzenPanelMenu>
+                <RadzenPanelMenuItem Text="@localizer["home"]" Icon="home" Path="" />
+                <AuthorizeView Context="panelMenuContext" Roles="@Role.Administrator">
+                    <Authorized>
+                        <RadzenPanelMenuItem Text="@localizer["administration"]" Icon="admin_panel_settings">
+                            <RadzenPanelMenuItem Text="@localizer["users"]" Icon="account_box" Path="users" />                            
+                        </RadzenPanelMenuItem>
+                        <RadzenPanelMenuItem Text="@localizer["counter"]" Icon="plus_one" Path="counter" />
+                    </Authorized>
+                    <NotAuthorized>
+                        <RadzenPanelMenuItem Text="@localizer["login"]" Icon="login" Path="login" />
+                    </NotAuthorized>
+                </AuthorizeView>            
+            </RadzenPanelMenu>
+            <div class="rz-p-4">
+                Sidebar
+            </div>
+        </RadzenSidebar>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    bool sidebarExpanded = false;
+    string LoggedUser = "Not logged in";
+    //string UserEmail = "";
+
+    protected override void OnInitialized()
+    {
+        LoggedUser = localizer["user_not_logged_in"].Value;
+        if (httpContextAccessor != null)        
+            if (httpContextAccessor.HttpContext.User.Claims.Count() > 0)
+            {
+                LoggedUser = httpContextAccessor.HttpContext.User.Identity.Name;
+                //UserEmail = httpContextAccessor.HttpContext.User.Claims.First(x => x.Type.Contains("email")).Value;
+            }
+    }
+
+    private void Logout()
+    {
+        NavigationManager.NavigateTo("/auth/logout/false", true);
+    }
+}

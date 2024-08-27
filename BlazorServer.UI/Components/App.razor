@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />    
+    <link id="themeId" rel="stylesheet" href="_content/Radzen.Blazor/css/dark.css">
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <HeadOutlet @rendermode="InteractiveServer" />
+</head>
+
+<body onload="getTheme()">
+    <Routes @rendermode="InteractiveServer" />
+    <script src="_framework/blazor.web.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
+    <script>
+        function getTheme() {
+            if (localStorage.getItem("theme") != null) {
+                let theme = localStorage.getItem('theme');
+                document.getElementById("themeId").href = `_content/Radzen.Blazor/css/${theme}.css`;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+﻿@page "/login"
+@page "/login/{loggedInError:bool}"
+
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using System.Security.Claims
+@inject NavigationManager navigationManager
+@inject IStringLocalizer<Resources> localizer
+
+<div class="rz-my-12 rz-mx-auto rz-p-4 rz-p-md-12" style="max-width: 600px;">
+    <RadzenCard >
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+            <RadzenImage Path="favicon.png" style="height: 32px; width: 32px"></RadzenImage>
+            <RadzenText TextStyle="TextStyle.H4">@localizer["login"]</RadzenText>
+        </RadzenStack>
+        <RadzenTemplateForm Data=@("LoginWithDefaultValues")>
+            <RadzenLogin AllowRegister="false" AllowResetPassword="false"
+                         AllowRememberMe="true"
+                         UserText="@localizer["username"]" PasswordText="@localizer["password"]" RememberMeText="@localizer["remember_me"]" LoginText="@localizer["login"]"
+                         UserRequired="@localizer["username_required"]" PasswordRequired="@localizer["password_required"]"
+                         Login=@LoginUser />
+        </RadzenTemplateForm>
+    </RadzenCard>
+
+    @if(loggedInError)
+    {
+        <RadzenStack AlignItems="AlignItems.Center">
+            <RadzenAlert Title="@localizer["login_error_title"]" AlertStyle="AlertStyle.Danger" Variant="Variant.Flat" Shade="Shade.Dark">
+                @localizer["login_error"]
+            </RadzenAlert>
+        </RadzenStack>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public bool loggedInError { get; set; } = false;
+
+    private void LoginUser(LoginArgs userLogin)
+    {        
+        if (userLogin.Username != "" || userLogin.Password != "")
+            navigationManager.NavigateTo($"auth/login?username={userLogin.Username}&password={userLogin.Password}&rememberMe={userLogin.RememberMe}", true);
+    }
+}
