@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 @inject IConfiguration _configuration;
 
-<RadzenDropDown @bind-Value=@Culture Data=@supportedCultures Style="width: 72px" />
+<RadzenDropDown @bind-Value=@Culture Data=@supportedCultures Style="width: 4.5rem;" />
 
 @code
 {
@@ -19,7 +19,8 @@
     {
         HttpContext?.Response.Cookies.Append(
             CookieRequestCultureProvider.DefaultCookieName,
-            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture)));
+            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture)), 
+            new CookieOptions { Secure = true, HttpOnly = true, SameSite = SameSiteMode.None });
 
         Culture = CultureInfo.CurrentCulture;
 

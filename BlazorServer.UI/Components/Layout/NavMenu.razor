@@ -4,16 +4,16 @@
 @inject IHttpContextAccessor httpContextAccessor
 @inject NavigationManager NavigationManager
 
-<div class="rz-header"> @* RadzenHeader *@
+<RadzenHeader>   
     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween">
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
             <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
             <RadzenIcon Icon="water_drop" />
             <RadzenLabel Text="MK Vodovod" />
         </RadzenStack>
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
-            <CultureSelector></CultureSelector>
-            <ThemeSwitcher></ThemeSwitcher>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Center">
+            <CultureSelector />
+            <ThemeSwitcher />
             <RadzenProfileMenu>
                 <Template>
                     <RadzenLabel Text="@LoggedUser"></RadzenLabel>
@@ -33,7 +33,7 @@
             </RadzenProfileMenu>
         </RadzenStack>
     </RadzenStack>
-</div>
+</RadzenHeader>
 <AuthorizeView>
     <Authorized>
         <RadzenSidebar @bind-Expanded="@sidebarExpanded">

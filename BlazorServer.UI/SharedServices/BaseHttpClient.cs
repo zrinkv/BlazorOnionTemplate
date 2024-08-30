@@ -52,7 +52,7 @@ namespace BlazorServer.UI.SharedServices
                     Summary = _localizer["error401"]
                 });
 
-                _navigationManager.NavigateTo("login"); //or RedirectToLogin/true
+                _navigationManager.NavigateTo("RedirectToLogin/false"); //or RedirectToLogin/true
 
                 return "You are not logged in/Cookie has expired";
             }    

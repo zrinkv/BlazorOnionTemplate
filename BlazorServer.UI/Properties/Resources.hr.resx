@@ -120,7 +120,7 @@
   <data name="error404" xml:space="preserve">
     <value>Tražena stranica ne postoji</value>
   </data>
-  <data name="helloWorld" xml:space="preserve">
+  <data name="hello_world" xml:space="preserve">
     <value>Pozdrav svijete!</value>
   </data>
   <data name="welcome" xml:space="preserve">
@@ -174,13 +174,64 @@
   <data name="smooth" xml:space="preserve">
     <value>Uglađeno</value>
   </data>
-  <data name="dataLabels" xml:space="preserve">
+  <data name="data_labels" xml:space="preserve">
     <value>Podatkovne labele</value>
   </data>
-  <data name="showMarkers" xml:space="preserve">
+  <data name="show_markers" xml:space="preserve">
     <value>Prikaži markere</value>
   </data>
-  <data name="revenueInEuro" xml:space="preserve">
+  <data name="revenue_in_euro" xml:space="preserve">
     <value>Prihod u €</value>
+  </data>
+  <data name="add_user" xml:space="preserve">
+    <value>Dodaj novog korisnika</value>
+  </data>
+  <data name="back_to_list" xml:space="preserve">
+    <value>Nazad na listu</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Spremi</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Odustani</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Naziv</value>
+  </data>
+  <data name="jan" xml:space="preserve">
+    <value>Sij</value>
+  </data>
+  <data name="feb" xml:space="preserve">
+    <value>Velj</value>
+  </data>
+  <data name="mar" xml:space="preserve">
+    <value>Ožu</value>
+  </data>
+  <data name="apr" xml:space="preserve">
+    <value>Tra</value>
+  </data>
+  <data name="may" xml:space="preserve">
+    <value>Svi</value>
+  </data>
+  <data name="jun" xml:space="preserve">
+    <value>Lip</value>
+  </data>
+  <data name="jul" xml:space="preserve">
+    <value>Srp</value>
+  </data>
+  <data name="aug" xml:space="preserve">
+    <value>Kol</value>
+  </data>
+  <data name="sept" xml:space="preserve">
+    <value>Ruj</value>
+  </data>
+  <data name="oct" xml:space="preserve">
+    <value>Lis</value>
+  </data>
+  <data name="nov" xml:space="preserve">
+    <value>Stu</value>
+  </data>
+  <data name="dec" xml:space="preserve">
+    <value>Pro</value>
   </data>
 </root>

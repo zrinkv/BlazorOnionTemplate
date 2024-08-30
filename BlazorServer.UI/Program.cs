@@ -24,6 +24,10 @@ builder.Services.AddHttpClient("MKVodovodAPI", httpClient =>
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IBaseHttpClient, BaseHttpClient>();
 builder.Services.AddScoped<Radzen.NotificationService>();
+//builder.Services.AddScoped<Radzen.ThemeService>(); // ne koristi se
+//builder.Services.AddScoped<Radzen.DialogService>();
+//builder.Services.AddScoped<Radzen.ContextMenuService>();
+//builder.Services.AddScoped<Radzen.TooltipService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options => 
@@ -33,7 +37,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         //options.Cookie.MaxAge = TimeSpan.FromHours(24);
         //options.ExpireTimeSpan = TimeSpan.FromMinutes(int.Parse(Configuration["SessionToken:ExpiresInMinutes"]));
         options.AccessDeniedPath = "/access-denied";
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;        
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        //options.Cookie.SameSite = SameSiteMode.Lax;
     });
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();

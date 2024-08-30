@@ -120,7 +120,7 @@
   <data name="error404" xml:space="preserve">
     <value>Page is not found</value>
   </data>
-  <data name="helloWorld" xml:space="preserve">
+  <data name="hello_world" xml:space="preserve">
     <value>Hello world!</value>
   </data>
   <data name="welcome" xml:space="preserve">
@@ -174,13 +174,64 @@
   <data name="smooth" xml:space="preserve">
     <value>Smooth</value>
   </data>
-  <data name="dataLabels" xml:space="preserve">
+  <data name="data_labels" xml:space="preserve">
     <value>Data labels</value>
   </data>
-  <data name="showMarkers" xml:space="preserve">
+  <data name="show_markers" xml:space="preserve">
     <value>Show markers</value>
   </data>
-  <data name="revenueInEuro" xml:space="preserve">
+  <data name="revenue_in_euro" xml:space="preserve">
     <value>Revenue in €</value>
+  </data>
+  <data name="add_user" xml:space="preserve">
+    <value>Add new user</value>
+  </data>
+  <data name="back_to_list" xml:space="preserve">
+    <value>Back to list</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="jan" xml:space="preserve">
+    <value>Jan</value>
+  </data>
+  <data name="feb" xml:space="preserve">
+    <value>Feb</value>
+  </data>
+  <data name="mar" xml:space="preserve">
+    <value>Mar</value>
+  </data>
+  <data name="apr" xml:space="preserve">
+    <value>Apr</value>
+  </data>
+  <data name="may" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="jun" xml:space="preserve">
+    <value>Jun</value>
+  </data>
+  <data name="jul" xml:space="preserve">
+    <value>Jul</value>
+  </data>
+  <data name="aug" xml:space="preserve">
+    <value>Aug</value>
+  </data>
+  <data name="sept" xml:space="preserve">
+    <value>Sept</value>
+  </data>
+  <data name="oct" xml:space="preserve">
+    <value>Oct</value>
+  </data>
+  <data name="nov" xml:space="preserve">
+    <value>Nov</value>
+  </data>
+  <data name="dec" xml:space="preserve">
+    <value>Dec</value>
   </data>
 </root>

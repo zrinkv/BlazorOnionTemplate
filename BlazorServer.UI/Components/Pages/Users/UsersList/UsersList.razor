@@ -1,16 +1,17 @@
 ﻿@page "/users"
+@attribute [Authorize(Roles = Role.Administrator)]
 @using Common.Constants
-@attribute [Authorize (Roles = Role.Administrator)]
+@inject IStringLocalizer<Resources> localizer
 
 <h3>Users List</h3>
+@* <RadzenButton Text="@localizer["add_user"]" Icon="person_add"></RadzenButton> *@
+<RadzenLink Path="users/add" Text="@localizer["add_user"]" Icon="person_add" class="rz-button rz-button-md rz-primary rz-shade-default rz-mb-2" />
 
 <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
                 Data="@loginList" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" SelectionMode="DataGridSelectionMode.Single">
     <Columns>
         <RadzenDataGridColumn Property="EmployeeID" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
-        <RadzenDataGridColumn Title="Photo" Frozen="true" Sortable="false" Filterable="false" Width="80px" TextAlign="TextAlign.Center">          
-       
-        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Photo" Frozen="true" Sortable="false" Filterable="false" Width="80px" TextAlign="TextAlign.Center" />
         <RadzenDataGridColumn Property="FirstName" Title="First Name" Frozen="true" Width="160px" />
         <RadzenDataGridColumn Property="LastName" Title="Last Name" Width="160px" />
         <RadzenDataGridColumn Property="Address" Title="Address" Width="200px" />
