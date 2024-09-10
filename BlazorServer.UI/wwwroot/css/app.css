@@ -49,3 +49,10 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+* {
+    transition-property: color, background-color, border-color;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+}
+
