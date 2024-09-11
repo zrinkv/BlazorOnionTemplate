@@ -51,7 +51,7 @@ h1:focus {
 }
 
 * {
-    transition-property: color, background-color, border-color;
+    transition-property: color, background-color, border-color, fill;
     transition-duration: 0.5s;
     transition-timing-function: ease;
 }

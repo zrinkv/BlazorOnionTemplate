@@ -98,7 +98,7 @@ Welcome to your new app.
 
         if (httpContextAccessor != null)
         {
-            if (httpContextAccessor.HttpContext.User.Claims.Count() > 0)
+            if (httpContextAccessor?.HttpContext?.User.Claims.Count() > 0)
                 UserAgent = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "jwtToken").ToString();          
 
             IPAddress = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();

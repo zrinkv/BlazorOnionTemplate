@@ -234,4 +234,25 @@
   <data name="dec" xml:space="preserve">
     <value>Pro</value>
   </data>
+  <data name="no_records" xml:space="preserve">
+    <value>Nema zapisa</value>
+  </data>
+  <data name="photo" xml:space="preserve">
+    <value>Fotografija</value>
+  </data>
+  <data name="image" xml:space="preserve">
+    <value>Slika</value>
+  </data>
+  <data name="first_name" xml:space="preserve">
+    <value>Ime</value>
+  </data>
+  <data name="last_name" xml:space="preserve">
+    <value>Prezime</value>
+  </data>
+  <data name="address" xml:space="preserve">
+    <value>Adresa</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>Grad</value>
+  </data>
 </root>

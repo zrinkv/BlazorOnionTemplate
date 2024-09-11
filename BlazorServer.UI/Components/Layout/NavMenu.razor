@@ -67,7 +67,7 @@
     {
         LoggedUser = localizer["user_not_logged_in"].Value;
         if (httpContextAccessor != null)        
-            if (httpContextAccessor.HttpContext.User.Claims.Count() > 0)
+            if (httpContextAccessor?.HttpContext?.User.Claims.Count() > 0)
             {
                 LoggedUser = httpContextAccessor.HttpContext.User.Identity.Name;
                 //UserEmail = httpContextAccessor.HttpContext.User.Claims.First(x => x.Type.Contains("email")).Value;
