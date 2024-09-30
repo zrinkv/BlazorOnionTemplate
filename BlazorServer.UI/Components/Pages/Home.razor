@@ -18,7 +18,7 @@ Welcome to your new app.
         <span>You are not logged in</span>
         <a href="/login">Login</a>
     </NotAuthorized>
-    <Authorized>
+    <Authorized> @* Test block only. Delete if not needed *@
         Home
         <span>Logged in as <b>@context.User.Identity.Name</b></span>
         <a href="/logout">Logout</a>
@@ -28,30 +28,72 @@ Welcome to your new app.
         <br />
         @contentStringData
         <hr />
-        
-        <RadzenCard class="w-100 mb-4" Style="display: flex; align-items: center; gap: 0.5rem">
-            <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
-            <RadzenLabel Text="@localizer["smooth"]" Component="smooth" Style="margin-right: 1rem;" />
-            <RadzenCheckBox @bind-Value="@showDataLabels" Name="dataLabels"></RadzenCheckBox>
-            <RadzenLabel Text="@localizer["data_labels"]" Component="dataLabels" Style="margin-right: 1rem;" />
-            <RadzenCheckBox @bind-Value="@showMarkers" Name="markers"></RadzenCheckBox>
-            <RadzenLabel Text="@localizer["show_markers"]" Component="markers" />
-        </RadzenCard>
-        <RadzenChart>
-            <RadzenLineSeries Smooth="@smooth" Data="@revenue2023" CategoryProperty="Date" Title="2023" LineType="LineType.Dashed" ValueProperty="Revenue">
-                <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
-                <RadzenSeriesDataLabels Visible="@showDataLabels" />
-            </RadzenLineSeries>
-            <RadzenLineSeries Smooth="@smooth" Data="@revenue2024" CategoryProperty="Date" Title="2024" ValueProperty="Revenue">
-                <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Circle" />
-                <RadzenSeriesDataLabels Visible="@showDataLabels" />
-            </RadzenLineSeries>
-            <RadzenCategoryAxis Padding="20" />
-            <RadzenValueAxis Formatter="@FormatAsCurrency">
-                <RadzenGridLines Visible="true" />
-                <RadzenAxisTitle Text="@localizer["revenue_in_euro"]" />
-            </RadzenValueAxis>
-        </RadzenChart>
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceAround" AlignItems="AlignItems.Stretch" Gap="1rem">
+            <RadzenCard>
+                <RadzenText TextStyle="TextStyle.H6">Radzen H6</RadzenText>
+                <RadzenText TextStyle="TextStyle.Body1">
+                    Lorem ipsum text.
+                </RadzenText>
+            </RadzenCard>
+            <RadzenCard>
+                <RadzenText TextStyle="TextStyle.H6">Radzen H6</RadzenText>
+                <RadzenText TextStyle="TextStyle.Body1">
+                    Lorem ipsum text.
+                </RadzenText>
+                <RadzenText TextStyle="TextStyle.Overline">
+                    Lorem ipsum text.
+                </RadzenText>
+            </RadzenCard>
+            <RadzenCard>
+                <RadzenText TextStyle="TextStyle.H6">Radzen H6</RadzenText>
+                <RadzenText TextStyle="TextStyle.Body1">
+                    Lorem ipsum text.
+                </RadzenText>
+            </RadzenCard>
+            <RadzenCard>
+                <RadzenText TextStyle="TextStyle.H6">Radzen H6</RadzenText>
+                <RadzenText TextStyle="TextStyle.Body1">
+                    Lorem ipsum text.
+                </RadzenText>
+            </RadzenCard>
+        </RadzenStack>
+        <br />
+        <RadzenStack Orientation="Orientation.Vertical">
+            <RadzenCard>
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                        <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+                        <RadzenLabel Text="@localizer["smooth"]" Component="smooth" />
+                    </RadzenStack>
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                        <RadzenCheckBox @bind-Value="@showDataLabels" Name="dataLabels"></RadzenCheckBox>
+                        <RadzenLabel Text="@localizer["data_labels"]" Component="dataLabels" />
+                    </RadzenStack>
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                        <RadzenCheckBox @bind-Value="@showMarkers" Name="markers"></RadzenCheckBox>
+                        <RadzenLabel Text="@localizer["show_markers"]" Component="markers" />
+                    </RadzenStack>                    
+                </RadzenStack>
+            </RadzenCard>
+
+            <RadzenChart>
+                <RadzenChartTooltipOptions Shared="true" />
+                <RadzenLineSeries Smooth="@smooth" Data="@revenue2023" CategoryProperty="Date" Title="2023" LineType="LineType.Dashed" ValueProperty="Revenue">
+                    <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Square" />
+                    <RadzenSeriesDataLabels Visible="@showDataLabels" />
+                </RadzenLineSeries>
+                <RadzenLineSeries Smooth="@smooth" Data="@revenue2024" CategoryProperty="Date" Title="2024" ValueProperty="Revenue">
+                    <RadzenMarkers Visible="@showMarkers" MarkerType="MarkerType.Circle" />
+                    <RadzenSeriesDataLabels Visible="@showDataLabels" />
+                </RadzenLineSeries>
+                <RadzenCategoryAxis Padding="20" />
+                <RadzenValueAxis Formatter="@FormatAsCurrency">
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="@localizer["revenue_in_euro"]" />
+                </RadzenValueAxis>
+            </RadzenChart>
+        </RadzenStack>
           
     </Authorized>
 </AuthorizeView>
@@ -89,7 +131,7 @@ Welcome to your new app.
     public string? LocalTimeZone;
     public string? DateTimeNow;
 
-    DataItem[] revenue2023, revenue2024;
+    DataItem[]? revenue2023, revenue2024;
 
     protected override async Task OnInitializedAsync()
     {
