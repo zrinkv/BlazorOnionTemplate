@@ -258,4 +258,10 @@
   <data name="logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
 </root>

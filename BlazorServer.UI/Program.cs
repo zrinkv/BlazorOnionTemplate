@@ -61,6 +61,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
+app.UseStatusCodePagesWithRedirects("/StatusCode/404");
 
 app.UseStaticFiles();
 app.UseAntiforgery();

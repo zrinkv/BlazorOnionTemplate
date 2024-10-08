@@ -258,4 +258,10 @@
   <data name="logout" xml:space="preserve">
     <value>Odjava</value>
   </data>
+  <data name="profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="roles" xml:space="preserve">
+    <value>Uloge</value>
+  </data>
 </root>
