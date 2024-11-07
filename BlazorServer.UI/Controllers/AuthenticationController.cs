@@ -31,18 +31,18 @@ namespace BlazorServer.UI.Controllers
             LoginResponseModel? authResponse = new LoginResponseModel();
 
             var result = await _baseHttpClient.PostRequestAsync("Login/Login", model);
-            if (result != null)
+            if (!result.Contains("wrong_username_password"))
             {
                 authResponse = JsonConvert.DeserializeObject<LoginResponseModel>(result);
                 var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(authResponse?.Token);
-
+                
                 var claims = new List<Claim>
                 {
-                    new Claim("jwtToken", authResponse?.Token ?? ""),
-                    new Claim(ClaimTypes.Name, jwtSecurityToken.Claims.First(x => x.Type == "sub").Value),
-                    new Claim(ClaimTypes.Role, jwtSecurityToken.Claims.First(x => x.Type.Contains("role")).Value),
-                    new Claim(ClaimTypes.Email, jwtSecurityToken.Claims.First(x => x.Type.Contains("email")).Value),
-                    new Claim(ClaimTypes.Expiration, jwtSecurityToken.Claims.First(x => x.Type == "exp").Value)
+                    new Claim("jwtToken", authResponse?.Token ?? string.Empty),
+                    new Claim(ClaimTypes.Name, jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == "sub")?.Value ?? string.Empty),
+                    new Claim(ClaimTypes.Role, jwtSecurityToken.Claims.FirstOrDefault(x => x.Type.Contains("role"))?.Value ?? string.Empty),
+                    new Claim(ClaimTypes.Email, jwtSecurityToken.Claims.FirstOrDefault(x => x.Type.Contains("email"))?.Value ?? string.Empty),
+                    new Claim(ClaimTypes.Expiration, jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == "exp")?.Value ?? string.Empty)
                 };
                
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -24,7 +24,7 @@ namespace Application.Services.Login.Queries.GetUserByUsernameAndPassword
                 List<string> roles = ["Administrator", "EndUser"];
                 user = new LoggedUserViewModel {UserId = 1, Username = "User Trivedi", Email = "test.mail@mail.com", Roles = roles };
             }
-            return user ?? new LoggedUserViewModel();
+            return user;
         }
     }
 }

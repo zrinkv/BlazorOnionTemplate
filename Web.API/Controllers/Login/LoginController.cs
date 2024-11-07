@@ -20,7 +20,7 @@ namespace BlazorServer.API.Controllers.Login
             if (user != null)
                 return Ok(new { token = GenerateJSONWebToken(user, request.RememberMe) });            
 
-            return BadRequest("wrong_username_password");
+            return Ok("wrong_username_password");
         }
 
         [HttpGet]
