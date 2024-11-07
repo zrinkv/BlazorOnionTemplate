@@ -69,7 +69,7 @@
         if (httpContextAccessor != null)        
             if (httpContextAccessor?.HttpContext?.User.Claims.Count() > 0)
             {
-                LoggedUser = httpContextAccessor.HttpContext.User.Identity.Name;
+                LoggedUser = httpContextAccessor.HttpContext.User.Identity?.Name ?? "Not logged in";
                 //UserEmail = httpContextAccessor.HttpContext.User.Claims.First(x => x.Type.Contains("email")).Value;
             }
     }

@@ -33,6 +33,6 @@
     private async Task GetAuthUser()
     {
         var authState = await authenticationStateTask;
-        username = authState.User.Identity.Name;
+        username = authState?.User?.Identity?.Name ?? "";
     }
 }

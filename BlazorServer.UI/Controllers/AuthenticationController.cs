@@ -28,17 +28,17 @@ namespace BlazorServer.UI.Controllers
             model.Password = password;           
             model.RememberMe = rememberMe;
 
-            LoginResponseModel authResponse = new LoginResponseModel();
+            LoginResponseModel? authResponse = new LoginResponseModel();
 
             var result = await _baseHttpClient.PostRequestAsync("Login/Login", model);
             if (result != null)
             {
                 authResponse = JsonConvert.DeserializeObject<LoginResponseModel>(result);
-                var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(authResponse.Token);
+                var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(authResponse?.Token);
 
                 var claims = new List<Claim>
                 {
-                    new Claim("jwtToken", authResponse.Token),
+                    new Claim("jwtToken", authResponse?.Token ?? ""),
                     new Claim(ClaimTypes.Name, jwtSecurityToken.Claims.First(x => x.Type == "sub").Value),
                     new Claim(ClaimTypes.Role, jwtSecurityToken.Claims.First(x => x.Type.Contains("role")).Value),
                     new Claim(ClaimTypes.Email, jwtSecurityToken.Claims.First(x => x.Type.Contains("email")).Value),

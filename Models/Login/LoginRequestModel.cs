@@ -6,10 +6,10 @@ namespace Models.Login
     public class LoginRequestModel
     {
         [Required]
-        public string Username { get; set; }
+        public string? Username { get; set; }
         [Required]
         [PasswordPropertyText]
-        public string Password { get; set; }
+        public string? Password { get; set; }
         public bool RememberMe { get; set; }
     }
 }

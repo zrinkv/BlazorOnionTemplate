@@ -32,7 +32,7 @@ namespace BlazorServer.API.Controllers.Login
 
             if (currentUser.HasClaim(c => c.Type == "DateOfJoining"))
             {
-                DateTime date = DateTime.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == "DateOfJoining").Value);
+                DateTime date = DateTime.Parse(currentUser.Claims.First(c => c.Type == "DateOfJoining").Value);
                 spendingTimeWithCompany = DateTime.Today.Year - date.Year;
             }
 

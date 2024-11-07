@@ -15,7 +15,7 @@ namespace Application.Services.Login.Queries.GetUserByUsernameAndPassword
 
         public async Task<LoggedUserViewModel> Handle(GetUserByUsernameAndPasswordQuery request, CancellationToken cancellationToken)
         {
-            LoggedUserViewModel user = null;
+            LoggedUserViewModel? user = null;
 
             //Validate the User Credentials
             //Demo Purpose, I have Passed HardCoded User Information
@@ -24,7 +24,7 @@ namespace Application.Services.Login.Queries.GetUserByUsernameAndPassword
                 List<string> roles = ["Administrator", "EndUser"];
                 user = new LoggedUserViewModel {UserId = 1, Username = "User Trivedi", Email = "test.mail@mail.com", Roles = roles };
             }
-            return user;
+            return user ?? new LoggedUserViewModel();
         }
     }
 }

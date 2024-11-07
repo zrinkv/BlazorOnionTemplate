@@ -26,26 +26,26 @@ namespace BlazorServer.API.Controllers
 
         protected string GenerateJSONWebToken(LoggedUserViewModel userInfo, bool RememberMe)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config?["Jwt:Key"] ?? "no security key"));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.Username),
-                new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),          
+                new Claim(JwtRegisteredClaimNames.Sub, userInfo.Username ?? String.Empty),
+                new Claim(JwtRegisteredClaimNames.Email, userInfo.Email ?? String.Empty),          
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),                
-                new Claim(ClaimTypes.Name, userInfo.Username),
+                new Claim(ClaimTypes.Name, userInfo.Username ?? String.Empty),
                 new Claim("FullName", "Ime Prezime"),
-                new Claim("userId", userInfo.UserId.ToString()),
+                new Claim("userId", userInfo.UserId.ToString() ?? String.Empty),
             };
 
             for (int i = 0; i < userInfo.Roles?.Count; i++) //adding user roles to claim
                 claims.Add(new Claim(ClaimTypes.Role, userInfo.Roles[i]));            
 
             var token = new JwtSecurityToken(
-                _config["Jwt:Issuer"],
-                _config["Jwt:Issuer"],
+                _config?["Jwt:Issuer"],
+                _config?["Jwt:Issuer"],
                 claims,
-                expires: RememberMe ? DateTime.UtcNow.AddHours(24) : DateTime.UtcNow.AddMinutes(int.Parse(_config["Jwt:ExpiresInMinutes"])),
+                expires: RememberMe ? DateTime.UtcNow.AddHours(24) : DateTime.UtcNow.AddMinutes(int.Parse(_config?["Jwt:ExpiresInMinutes"] ?? "1")),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

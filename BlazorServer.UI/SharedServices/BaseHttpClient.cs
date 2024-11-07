@@ -26,10 +26,10 @@ namespace BlazorServer.UI.SharedServices
 
         public string GetToken()
         {
-            if (_httpContextAccessor.HttpContext.User.Claims.Any())
+            if (_httpContextAccessor.HttpContext?.User.Claims.Any() ?? false)
                 return _httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "jwtToken").ToString().Split(":")[1].Trim();            
             else
-                return null;
+                return String.Empty;
         }
 
         public async Task<string> GetApiResponseAsync(string endpoint)
@@ -74,7 +74,7 @@ namespace BlazorServer.UI.SharedServices
                 return await result.Content.ReadAsStringAsync();            
             }
 
-            return null;
+            return result.StatusCode.ToString();
         }
     }
 }

@@ -3,8 +3,9 @@
 @using BlazorServer.UI.SharedServices
 @inject IHttpContextAccessor httpContextAccessor
 @inject NavigationManager navigationManager
-@inject IBaseHttpClient _baseHttpClient;
+@inject IBaseHttpClient _baseHttpClient
 @inject IStringLocalizer<Resources> localizer
+@inject TooltipService tooltipService
 
 <PageTitle>@localizer["home"]</PageTitle>
 
@@ -20,7 +21,7 @@ Welcome to your new app.
     </NotAuthorized>
     <Authorized> @* Test block only. Delete if not needed *@
         Home
-        <span>Logged in as <b>@context.User.Identity.Name</b></span>
+        <span>Logged in as <b>@context?.User?.Identity?.Name</b></span>
         <a href="/logout">Logout</a>
     </Authorized>
     <Authorized>
@@ -143,7 +144,7 @@ Welcome to your new app.
             if (httpContextAccessor?.HttpContext?.User.Claims.Count() > 0)
                 UserAgent = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "jwtToken").ToString();          
 
-            IPAddress = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            IPAddress = httpContextAccessor?.HttpContext?.Connection?.RemoteIpAddress?.ToString();
 
             InitGraphData();
 

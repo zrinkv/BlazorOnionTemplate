@@ -17,13 +17,14 @@ builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient("MKVodovodAPI", httpClient =>
 {
-    httpClient.BaseAddress = new Uri(Configuration["WebAPIUrl"]);
+    httpClient.BaseAddress = new Uri(Configuration["WebAPIUrl"] ?? "No base address");
     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IBaseHttpClient, BaseHttpClient>();
 builder.Services.AddScoped<Radzen.NotificationService>();
+builder.Services.AddScoped<Radzen.TooltipService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options => 
@@ -31,7 +32,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.Name = "auth_cookie";
         options.LoginPath = "/login";
         options.Cookie.MaxAge = TimeSpan.FromHours(24);
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(int.Parse(Configuration["SessionToken:ExpiresInMinutes"]));
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(int.Parse(Configuration["SessionToken:ExpiresInMinutes"] ?? "360"));
         options.AccessDeniedPath = "/access-denied";
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         //options.Cookie.SameSite = SameSiteMode.Lax;
@@ -42,11 +43,11 @@ builder.Services.AddCascadingAuthenticationState();
 var app = builder.Build();
 
 //Localization
-string[] supportedCultures = Configuration.GetSection("SupportedCultures").Get<string[]>();
+string[]? supportedCultures = Configuration?.GetSection("SupportedCultures").Get<string[]>();
 var localizationOptions = new RequestLocalizationOptions()
-    .SetDefaultCulture(supportedCultures[0])
-    .AddSupportedCultures(supportedCultures)
-    .AddSupportedUICultures(supportedCultures);
+    .SetDefaultCulture(supportedCultures?[0] ?? "hr-HR")
+    .AddSupportedCultures(supportedCultures ?? ["hr-HR", "en-US"])
+    .AddSupportedUICultures(supportedCultures ?? ["hr-HR", "en-US"]);
 
 app.UseRequestLocalization(localizationOptions);
 

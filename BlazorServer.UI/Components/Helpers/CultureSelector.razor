@@ -27,7 +27,7 @@
         try
         {
             var supportedCulturesList = _configuration.GetSection("SupportedCultures").Get<string[]>();
-            supportedCultures = new CultureInfo[(int)supportedCulturesList?.Length];
+            supportedCultures = new CultureInfo[supportedCulturesList?.Length ?? 0];
 
             for (int i = 0; i < supportedCulturesList?.Length; i++)
                 supportedCultures[i] = new CultureInfo(supportedCulturesList[i]);

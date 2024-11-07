@@ -3,13 +3,13 @@
 
 @code {
     [Inject]
-    private NavigationManager navMan { get; set; }
+    private NavigationManager? navMan { get; set; }
 
     [Parameter]
     public bool loggedInError { get; set; } = false;
 
     protected override void OnAfterRender(bool firstRender)
     {
-        navMan.NavigateTo("/auth/logout/" + loggedInError, true);
+        navMan?.NavigateTo("/auth/logout/" + loggedInError, true);
     }
 }
