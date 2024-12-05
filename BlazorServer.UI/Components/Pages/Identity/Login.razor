@@ -14,7 +14,7 @@
             <RadzenText TextStyle="TextStyle.H4">@localizer["login"]</RadzenText>
         </RadzenStack>
         <RadzenTemplateForm Data=@("LoginWithDefaultValues")>
-            <RadzenLogin AllowRegister="false" AllowResetPassword="false"
+            <RadzenLogin AllowRegister="false" AllowResetPassword="false" Password="1234" Username="user"
                          AllowRememberMe="true"
                          UserText="@localizer["username"]" PasswordText="@localizer["password"]" RememberMeText="@localizer["remember_me"]" LoginText="@localizer["login"]"
                          UserRequired="@localizer["username_required"]" PasswordRequired="@localizer["password_required"]"

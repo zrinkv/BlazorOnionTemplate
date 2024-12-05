@@ -34,7 +34,7 @@ namespace BlazorServer.UI.SharedServices
                 return String.Empty;
         }
 
-        public async Task<string> GetApiResponseAsync(string endpoint)
+        public async Task<string?> GetApiResponseAsync(string endpoint)
         {
             if (_httpClient.DefaultRequestHeaders.Authorization == null)
                 _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", GetToken());
@@ -47,11 +47,26 @@ namespace BlazorServer.UI.SharedServices
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                ShowNotification(NotificationSeverity.Warning, _localizer["error401"]);
+                string? expiresAtUnixTime = _httpContextAccessor?.HttpContext?.User.Claims.First(c => c.Type.Contains("exp")).Value;
 
-                _navigationManager.NavigateTo("RedirectToLogin/false"); //or RedirectToLogin/true
+                if (DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiresAtUnixTime)).UtcDateTime < DateTime.UtcNow)
+                {
+                    ShowNotification(NotificationSeverity.Warning, _localizer["session_expired_warning"]);
+                    await Task.Delay(1000);
 
-                return "You are not logged in/Cookie has expired";
+                    _navigationManager.NavigateTo("RedirectToLogin/false"); //or RedirectToLogin/true
+                    return null; // "You are not logged in/Cookie has expired";
+                }
+                else
+                {
+                    ShowNotification(NotificationSeverity.Warning, _localizer["error401"]);
+                    return null;
+                }
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                ShowNotification(NotificationSeverity.Warning, _localizer["error403"]);
+                return null;
             }
             else
             {
@@ -69,14 +84,14 @@ namespace BlazorServer.UI.SharedServices
             if (response.IsSuccessStatusCode)
             {
                 var resultMessage = await response.Content.ReadAsStringAsync();
-                ShowNotification(NotificationSeverity.Success, resultMessage);
+                ShowNotification(NotificationSeverity.Success, resultMessage.Replace("\"", ""));
 
                 return resultMessage;
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
                 var detailsErrors = await response.Content.ReadAsStringAsync();
-                
+                //Console.WriteLine(detailsErrors);  
                 try
                 {
                     JToken token = JObject.Parse(detailsErrors)["errors"];
@@ -104,7 +119,7 @@ namespace BlazorServer.UI.SharedServices
             {
                 Severity = notificationSeverity,
                 Duration = 10000,
-                Summary = _localizer[summaryMessage]
+                Summary = _localizer[summaryMessage ?? "empty_error_message"]
             });
         }
     }
